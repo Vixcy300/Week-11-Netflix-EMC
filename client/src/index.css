@@ -1,0 +1,684 @@
+/* ═══════════════════════════════════════════════════════════════
+   Netflix Login Page — Global Design System
+═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ── Reset & Base ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --netflix-red:       #E50914;
+  --netflix-red-hover: #c40812;
+  --netflix-dark:      #000000;
+  --card-bg:           rgba(0, 0, 0, 0.75);
+  --input-bg:          #333333;
+  --input-bg-focus:    #454545;
+  --text-primary:      #ffffff;
+  --text-secondary:    #b3b3b3;
+  --text-muted:        #8c8c8c;
+  --border-radius-sm:  4px;
+  --border-radius-md:  8px;
+  --font:              'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --transition:        0.2s ease;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font);
+  background-color: var(--netflix-dark);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LOGIN PAGE
+══════════════════════════════════════════════════════════════ */
+
+.login-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000;
+  overflow: hidden;
+}
+
+/* ── Background poster grid ───────────────────────────────────── */
+.login-bg {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 3px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.login-bg-tile {
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.6);
+}
+
+/* Gradient overlay */
+.login-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.65) 0%,
+    rgba(0,0,0,0.55) 30%,
+    rgba(0,0,0,0.75) 70%,
+    rgba(0,0,0,0.95) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Header / Navbar ──────────────────────────────────────────── */
+.login-header {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1200px;
+  padding: 28px 48px;
+  display: flex;
+  align-items: center;
+}
+
+.netflix-logo {
+  display: flex;
+  align-items: center;
+}
+
+.netflix-logo svg {
+  height: 45px;
+  width: auto;
+}
+
+/* ── Card ─────────────────────────────────────────────────────── */
+.login-body {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-card {
+  background: var(--card-bg);
+  border-radius: 4px;
+  padding: 60px 68px 40px;
+  width: 100%;
+  max-width: 450px;
+  backdrop-filter: blur(2px);
+  animation: fadeInCard 0.4s ease;
+}
+
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.login-card h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 28px;
+  letter-spacing: -0.3px;
+}
+
+/* ── Error banner ─────────────────────────────────────────────── */
+.error-banner {
+  background-color: #e87c03;
+  color: #fff;
+  padding: 14px 16px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.88rem;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  animation: slideDown 0.25s ease;
+  line-height: 1.5;
+}
+
+.error-banner svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Floating label inputs ────────────────────────────────────── */
+.form-group {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.form-group input {
+  width: 100%;
+  height: 56px;
+  background: var(--input-bg);
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 1rem;
+  padding: 22px 16px 8px;
+  outline: none;
+  transition: background var(--transition), border-color var(--transition);
+  caret-color: var(--text-primary);
+}
+
+.form-group input:focus {
+  background: var(--input-bg-focus);
+  border-color: #808080;
+}
+
+.form-group label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: top 0.18s ease, font-size 0.18s ease, color 0.18s ease;
+  transform-origin: left top;
+}
+
+/* Float the label when input is focused OR has value */
+.form-group input:focus ~ label,
+.form-group input.has-value ~ label {
+  top: 10px;
+  transform: translateY(0);
+  font-size: 0.72rem;
+  color: #a5a5a5;
+}
+
+/* Error state */
+.form-group.has-error input {
+  border-color: #e87c03;
+  background: #3b2e1e;
+}
+
+.field-error {
+  color: #e87c03;
+  font-size: 0.78rem;
+  margin-top: 5px;
+  padding-left: 4px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Password toggle eye button */
+.pw-wrapper {
+  position: relative;
+}
+
+.pw-toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  transition: color var(--transition);
+}
+
+.pw-toggle:hover {
+  color: var(--text-secondary);
+}
+
+/* ── Submit button ────────────────────────────────────────────── */
+.btn-signin {
+  width: 100%;
+  height: 50px;
+  background: var(--netflix-red);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  letter-spacing: 0.3px;
+  transition: background var(--transition), transform 0.1s ease, box-shadow var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-signin:hover:not(:disabled) {
+  background: var(--netflix-red-hover);
+  box-shadow: 0 4px 20px rgba(229, 9, 20, 0.35);
+}
+
+.btn-signin:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-signin:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Loading spinner */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Remember me ──────────────────────────────────────────────── */
+.form-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.remember-me input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--netflix-red);
+  cursor: pointer;
+}
+
+.help-link {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.help-link:hover {
+  text-decoration: underline;
+  color: var(--text-secondary);
+}
+
+/* ── Footer copy ──────────────────────────────────────────────── */
+.login-card-footer {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin-top: 16px;
+}
+
+.login-card-footer a {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.login-card-footer a:hover {
+  text-decoration: underline;
+}
+
+.recaptcha-notice {
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.recaptcha-notice a {
+  color: var(--text-muted);
+  text-decoration: underline;
+}
+
+/* ── Page footer ──────────────────────────────────────────────── */
+.login-footer {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  background: rgba(0,0,0,0.7);
+  padding: 30px 48px;
+  margin-top: auto;
+}
+
+.login-footer p {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  margin-bottom: 18px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 32px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DASHBOARD PAGE
+═══════════════════════════════════════════════════════════════ */
+
+.dashboard-page {
+  min-height: 100vh;
+  background: #141414;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Dashboard Nav ────────────────────────────────────────────── */
+.dashboard-nav {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+  padding: 18px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.dashboard-nav .netflix-logo svg {
+  height: 38px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.nav-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  background: var(--netflix-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.nav-user-email {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.btn-logout {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--border-radius-sm);
+  padding: 7px 16px;
+  font-family: var(--font);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+}
+
+.btn-logout:hover {
+  color: #fff;
+  border-color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.05);
+}
+
+/* ── Dashboard Body ───────────────────────────────────────────── */
+.dashboard-body {
+  flex: 1;
+  padding: 40px 48px;
+}
+
+/* Welcome banner */
+.welcome-banner {
+  margin-bottom: 48px;
+}
+
+.welcome-banner h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.welcome-banner h1 span {
+  color: var(--netflix-red);
+}
+
+.welcome-banner p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Profile section */
+.profiles-section {
+  margin-bottom: 52px;
+}
+
+.section-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+
+.profiles-grid {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.profile-card:hover {
+  transform: scale(1.05);
+}
+
+.profile-card:hover .profile-avatar {
+  border-color: var(--text-primary);
+}
+
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  border: 3px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.profile-name {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.profile-card:hover .profile-name {
+  color: var(--text-primary);
+}
+
+/* Content rows */
+.content-row {
+  margin-bottom: 40px;
+}
+
+.row-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.movie-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+
+.movie-card {
+  flex-shrink: 0;
+  width: 180px;
+  height: 100px;
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  letter-spacing: 0.5px;
+  text-align: center;
+  padding: 10px;
+  user-select: none;
+}
+
+.movie-card:hover {
+  transform: scale(1.06) translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.6);
+  z-index: 1;
+  position: relative;
+}
+
+/* ── Success check animation ──────────────────────────────────── */
+.success-toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  background: #1a7a1a;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  animation: toastIn 0.35s ease, toastOut 0.35s ease 3.2s forwards;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+
+@keyframes toastOut {
+  from { opacity: 1; transform: translateX(0);    }
+  to   { opacity: 0; transform: translateX(30px); }
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .login-header {
+    padding: 20px 24px;
+  }
+
+  .login-card {
+    padding: 40px 28px 32px;
+  }
+
+  .login-footer {
+    padding: 24px;
+  }
+
+  .dashboard-nav {
+    padding: 16px 20px;
+  }
+
+  .dashboard-body {
+    padding: 28px 20px;
+  }
+
+  .welcome-banner h1 {
+    font-size: 1.6rem;
+  }
+
+  .movie-card {
+    width: 140px;
+    height: 80px;
+  }
+}
