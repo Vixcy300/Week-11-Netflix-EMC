@@ -1,13 +1,13 @@
-﻿const express = require('express')
+const express = require('express')
 const cors = require('cors')
 
 const app = express()
-const PORT = 5000
+const PORT = process.env.PORT || 5000
 
 app.use(cors({ origin: ['http://localhost:5173', 'https://week-11-netflix-emc.vercel.app', 'https://week-11-netflix-emc.netlify.app'], methods: ['GET', 'POST', 'OPTIONS'], credentials: true }))
 app.use(express.json())
 
-// â”€â”€ Mock credentials â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Mock credentials
 const MOCK_USERS = [
   { email: 'viewer@netflixclone.dev', password: 'Stream@2026',  name: 'Demo Viewer'  },
   { email: 'user@netflix.com',        password: 'netflix123',   name: 'Netflix User' },
@@ -44,9 +44,11 @@ app.post('/api/login', (req, res) => {
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
-  console.log(`\nðŸŽ¬ Netflix Login Server â†’ http://localhost:${PORT}`)
-  console.log('\n   Demo credentials:')
-  MOCK_USERS.forEach((u) => console.log(`   â€¢ ${u.email} / ${u.password}`))
-  console.log('')
-})
+    console.log(`\n🚀 Netflix Login Server -> http://localhost:${PORT}`)
+    console.log('\n   Demo credentials:')
+    MOCK_USERS.forEach((u) => console.log(`   🔑 ${u.email} / ${u.password}`))
+    console.log('')
+  })
+}
 
+module.exports = app
